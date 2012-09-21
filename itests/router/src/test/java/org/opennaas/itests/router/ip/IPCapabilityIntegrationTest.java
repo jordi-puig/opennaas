@@ -135,11 +135,11 @@ public class IPCapabilityIntegrationTest
 		String method = "setIPv4";
 		Client client = null;
 		try {
+			Thread.sleep(5000); // FIXME Find a best solution
 			client = Client.create();
 			webResource = client.resource(WS_PATH + method);
 			response = webResource.accept(MediaType.APPLICATION_XML).type(MediaType.APPLICATION_XML).post(ClientResponse.class, getSetIPv4Request());
 			log.info("Response code: " + response.getStatus());
-			System.out.println("Response code: " + response.getStatus());
 			Assert.assertTrue(response.getStatus() > 199 && response.getStatus() < 299);
 		} catch (Exception e) {
 			log.error(e.getMessage());
