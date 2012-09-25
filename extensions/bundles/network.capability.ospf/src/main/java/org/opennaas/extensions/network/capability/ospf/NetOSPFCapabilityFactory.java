@@ -5,6 +5,7 @@ import org.opennaas.core.resources.capability.AbstractCapabilityFactory;
 import org.opennaas.core.resources.capability.CapabilityException;
 import org.opennaas.core.resources.capability.ICapability;
 import org.opennaas.core.resources.descriptor.CapabilityDescriptor;
+import org.opennaas.extensions.network.capability.ospf.ws.NetOSPFCapabilityServiceImpl;
 
 public class NetOSPFCapabilityFactory extends AbstractCapabilityFactory {
 
@@ -18,7 +19,7 @@ public class NetOSPFCapabilityFactory extends AbstractCapabilityFactory {
 
 	@Override
 	public ICapability createCapability(CapabilityDescriptor capabilityDescriptor, String resourceId) throws CapabilityException {
-		return new NetOSPFCapability(capabilityDescriptor, resourceId);
+		return new NetOSPFCapabilityServiceImpl(capabilityDescriptor, resourceId);
 	}
 
 }
