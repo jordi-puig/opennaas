@@ -10,6 +10,7 @@ import org.opennaas.core.resources.capability.CapabilityException;
 import org.opennaas.core.resources.descriptor.CapabilityDescriptor;
 import org.opennaas.core.resources.descriptor.ResourceDescriptorConstants;
 import org.opennaas.extensions.queuemanager.IQueueManagerCapability;
+import org.opennaas.extensions.router.capability.staticroute.ws.IStaticRouteCapabilityService;
 
 /**
  * @author Jordi Puig
@@ -41,7 +42,7 @@ public class StaticRouteCapability extends AbstractCapability implements IStatic
 	 */
 	@Override
 	public void activate() throws CapabilityException {
-		registerService(Activator.getContext(), CAPABILITY_TYPE, getResourceType(), getResourceName(), IStaticRouteCapability.class.getName());
+		registerService(Activator.getContext(), CAPABILITY_TYPE, getResourceType(), getResourceName(), IStaticRouteCapabilityService.class.getName());
 		super.activate();
 	}
 
