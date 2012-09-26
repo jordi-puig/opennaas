@@ -6,16 +6,22 @@ import java.util.List;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
+import org.opennaas.extensions.router.capability.chassis.ws.wrapper.AddIfacesToLRRequest;
+import org.opennaas.extensions.router.capability.chassis.ws.wrapper.CreateLogicalRouterRequest;
+import org.opennaas.extensions.router.capability.chassis.ws.wrapper.CreateSubInterfaceRequest;
+import org.opennaas.extensions.router.capability.chassis.ws.wrapper.DeleteLogicalRouterRequest;
+import org.opennaas.extensions.router.capability.chassis.ws.wrapper.DeleteSubInterfaceRequest;
+import org.opennaas.extensions.router.capability.chassis.ws.wrapper.DownPhysicalIfaceRequest;
+import org.opennaas.extensions.router.capability.chassis.ws.wrapper.RemoveIfacesFromLRRequest;
+import org.opennaas.extensions.router.capability.chassis.ws.wrapper.SetEncapsulationLabelRequest;
+import org.opennaas.extensions.router.capability.chassis.ws.wrapper.SetEncapsulationRequest;
+import org.opennaas.extensions.router.capability.chassis.ws.wrapper.UpPhysicalIfaceRequest;
 import org.opennaas.extensions.router.model.ComputerSystem;
 import org.opennaas.extensions.router.model.EthernetPort;
 import org.opennaas.extensions.router.model.LogicalPort;
 import org.opennaas.extensions.router.model.NetworkPort;
 import org.opennaas.extensions.router.model.ProtocolEndpoint;
 import org.opennaas.extensions.router.model.ProtocolEndpoint.ProtocolIFType;
-import org.opennaas.extensions.router.model.wrappers.AddInterfacesToLogicalRouterRequest;
-import org.opennaas.extensions.router.model.wrappers.RemoveInterfacesFromLogicalRouterRequest;
-import org.opennaas.extensions.router.model.wrappers.SetEncapsulationLabelRequest;
-import org.opennaas.extensions.router.model.wrappers.SetEncapsulationRequest;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -47,7 +53,9 @@ public class ChassisTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, new LogicalPort());
+			UpPhysicalIfaceRequest request = new UpPhysicalIfaceRequest();
+			request.setLogicalPort(new LogicalPort());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -63,7 +71,9 @@ public class ChassisTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, new LogicalPort());
+			DownPhysicalIfaceRequest request = new DownPhysicalIfaceRequest();
+			request.setLogicalPort(new LogicalPort());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -79,7 +89,9 @@ public class ChassisTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, getEthernetPort());
+			CreateSubInterfaceRequest request = new CreateSubInterfaceRequest();
+			request.setNetworkPort(getEthernetPort());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -95,7 +107,9 @@ public class ChassisTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, getEthernetPort());
+			DeleteSubInterfaceRequest request = new DeleteSubInterfaceRequest();
+			request.setNetworkPort(getEthernetPort());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -111,7 +125,9 @@ public class ChassisTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, getComputerSystem());
+			CreateLogicalRouterRequest request = new CreateLogicalRouterRequest();
+			request.setComputerSystem(getComputerSystem());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -127,7 +143,9 @@ public class ChassisTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, getComputerSystem());
+			DeleteLogicalRouterRequest request = new DeleteLogicalRouterRequest();
+			request.setComputerSystem(getComputerSystem());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -241,8 +259,8 @@ public class ChassisTest {
 	/**
 	 * @return
 	 */
-	private static AddInterfacesToLogicalRouterRequest getAddInterfacesToLogicalRouterRequest() {
-		AddInterfacesToLogicalRouterRequest request = new AddInterfacesToLogicalRouterRequest();
+	private static AddIfacesToLRRequest getAddInterfacesToLogicalRouterRequest() {
+		AddIfacesToLRRequest request = new AddIfacesToLRRequest();
 		List<LogicalPort> interfaces = new ArrayList<LogicalPort>();
 		LogicalPort logicalPort = new LogicalPort();
 		interfaces.add(logicalPort);
@@ -253,8 +271,8 @@ public class ChassisTest {
 	/**
 	 * @return
 	 */
-	private static RemoveInterfacesFromLogicalRouterRequest getRemoveInterfacesToLogicalRouterRequest() {
-		RemoveInterfacesFromLogicalRouterRequest request = new RemoveInterfacesFromLogicalRouterRequest();
+	private static RemoveIfacesFromLRRequest getRemoveInterfacesToLogicalRouterRequest() {
+		RemoveIfacesFromLRRequest request = new RemoveIfacesFromLRRequest();
 		List<LogicalPort> interfaces = new ArrayList<LogicalPort>();
 		LogicalPort logicalPort = new LogicalPort();
 		interfaces.add(logicalPort);

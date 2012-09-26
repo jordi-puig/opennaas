@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.opennaas.extensions.router.model.wrappers;
+package org.opennaas.extensions.router.capability.chassis.ws.wrapper;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import org.opennaas.extensions.router.model.LogicalPort;
  * @author Jordi
  */
 @XmlRootElement
-public class AddInterfacesToLogicalRouterRequest {
+public class RemoveIfacesFromLRRequest {
 
 	private ComputerSystem		logicalRouter;
 	private List<LogicalPort>	interfaces;

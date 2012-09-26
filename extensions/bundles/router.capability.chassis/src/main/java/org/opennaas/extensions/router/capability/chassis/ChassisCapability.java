@@ -13,6 +13,7 @@ import org.opennaas.core.resources.capability.CapabilityException;
 import org.opennaas.core.resources.descriptor.CapabilityDescriptor;
 import org.opennaas.core.resources.descriptor.ResourceDescriptorConstants;
 import org.opennaas.extensions.queuemanager.IQueueManagerCapability;
+import org.opennaas.extensions.router.capability.chassis.ws.IChassisCapabilityService;
 import org.opennaas.extensions.router.model.ComputerSystem;
 import org.opennaas.extensions.router.model.LogicalPort;
 import org.opennaas.extensions.router.model.ManagedSystemElement.OperationalStatus;
@@ -20,10 +21,6 @@ import org.opennaas.extensions.router.model.NetworkPort;
 import org.opennaas.extensions.router.model.ProtocolEndpoint;
 import org.opennaas.extensions.router.model.ProtocolEndpoint.ProtocolIFType;
 import org.opennaas.extensions.router.model.utils.ModelHelper;
-import org.opennaas.extensions.router.model.wrappers.AddInterfacesToLogicalRouterRequest;
-import org.opennaas.extensions.router.model.wrappers.RemoveInterfacesFromLogicalRouterRequest;
-import org.opennaas.extensions.router.model.wrappers.SetEncapsulationLabelRequest;
-import org.opennaas.extensions.router.model.wrappers.SetEncapsulationRequest;
 
 public class ChassisCapability extends AbstractCapability implements IChassisCapability {
 
@@ -50,7 +47,7 @@ public class ChassisCapability extends AbstractCapability implements IChassisCap
 	 */
 	@Override
 	public void activate() throws CapabilityException {
-		registerService(Activator.getContext(), CAPABILITY_TYPE, getResourceType(), getResourceName(), IChassisCapability.class.getName());
+		registerService(Activator.getContext(), CAPABILITY_TYPE, getResourceType(), getResourceName(), IChassisCapabilityService.class.getName());
 		super.activate();
 	}
 
@@ -183,17 +180,6 @@ public class ChassisCapability extends AbstractCapability implements IChassisCap
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opennaas.extensions.router.capability.chassis.IChassisCapability#setEncapsulation(org.opennaas.extensions.router.model.wrappers.
-	 * SetEncapsulationRequest)
-	 */
-	@Override
-	public void setEncapsulation(SetEncapsulationRequest request) throws CapabilityException {
-		setEncapsulation(request.getIface(), request.getEncapsulation());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see org.opennaas.extensions.router.capability.chassis.IChassisCapability#setEncapsulation(org.opennaas.extensions.router.model.LogicalPort,
 	 * org.opennaas.extensions.router.model.ProtocolEndpoint.ProtocolIFType)
 	 */
@@ -209,17 +195,6 @@ public class ChassisCapability extends AbstractCapability implements IChassisCap
 		removeCurrentEncapsulation(iface);
 		setDesiredEncapsulation(iface);
 		log.info("End of setEncapsulation call");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.opennaas.extensions.router.capability.chassis.IChassisCapability#setEncapsulationLabel(org.opennaas.extensions.router.model.wrappers.
-	 * SetEncapsulationLabelRequest)
-	 */
-	@Override
-	public void setEncapsulationLabel(SetEncapsulationLabelRequest request) throws CapabilityException {
-		setEncapsulationLabel(request.getIface(), request.getEncapsulationLabel());
 	}
 
 	/*
@@ -289,18 +264,6 @@ public class ChassisCapability extends AbstractCapability implements IChassisCap
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.opennaas.extensions.router.capability.chassis.IChassisCapability#addInterfacesToLogicalRouter(org.opennaas.extensions.router.model.wrappers
-	 * .AddInterfacesToLogicalRouterRequest)
-	 */
-	@Override
-	public void addInterfacesToLogicalRouter(AddInterfacesToLogicalRouterRequest request) throws CapabilityException {
-		addInterfacesToLogicalRouter(request.getLogicalRouter(), request.getInterfaces());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see org.opennaas.extensions.router.capability.chassis.IChassisCapability#addInterfacesToLogicalRouter(org.opennaas.extensions.router.model.
 	 * ComputerSystem, java.util.List)
 	 */
@@ -321,18 +284,6 @@ public class ChassisCapability extends AbstractCapability implements IChassisCap
 		}
 		log.info("End of addInterfacesToLogicalRouter call");
 
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.opennaas.extensions.router.capability.chassis.IChassisCapability#removeInterfacesFromLogicalRouter(org.opennaas.extensions.router.model
-	 * .wrappers.RemoveInterfacesFromLogicalRouterRequest)
-	 */
-	@Override
-	public void removeInterfacesFromLogicalRouter(RemoveInterfacesFromLogicalRouterRequest request) throws CapabilityException {
-		removeInterfacesFromLogicalRouter(request.getLogicalRouter(), request.getInterfaces());
 	}
 
 	/*

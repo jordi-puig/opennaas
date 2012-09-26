@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.opennaas.extensions.router.model.wrappers;
+package org.opennaas.extensions.router.capability.chassis.ws.wrapper;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
