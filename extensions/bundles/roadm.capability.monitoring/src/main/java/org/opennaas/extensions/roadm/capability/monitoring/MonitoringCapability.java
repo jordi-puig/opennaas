@@ -24,6 +24,7 @@ import org.opennaas.core.resources.command.Response;
 import org.opennaas.core.resources.descriptor.CapabilityDescriptor;
 import org.opennaas.core.resources.descriptor.ResourceDescriptorConstants;
 import org.opennaas.extensions.queuemanager.IQueueManagerCapability;
+import org.opennaas.extensions.roadm.capability.monitoring.ws.IMonitoringCapabilityService;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -124,7 +125,7 @@ public class MonitoringCapability extends AbstractCapability implements EventHan
 	@Override
 	public void activate() throws CapabilityException {
 		registerAsCapabilityAlarmListener();
-		registerService(Activator.getContext(), CAPABILITY_TYPE, getResourceType(), getResourceName(), IMonitoringCapability.class.getName());
+		registerService(Activator.getContext(), CAPABILITY_TYPE, getResourceType(), getResourceName(), IMonitoringCapabilityService.class.getName());
 		super.activate();
 	}
 

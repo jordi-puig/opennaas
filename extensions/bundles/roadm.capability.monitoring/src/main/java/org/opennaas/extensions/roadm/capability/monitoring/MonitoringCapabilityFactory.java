@@ -5,6 +5,7 @@ import org.opennaas.core.resources.capability.AbstractCapabilityFactory;
 import org.opennaas.core.resources.capability.CapabilityException;
 import org.opennaas.core.resources.capability.ICapability;
 import org.opennaas.core.resources.descriptor.CapabilityDescriptor;
+import org.opennaas.extensions.roadm.capability.monitoring.ws.MonitoringCapabilityServiceImpl;
 
 public class MonitoringCapabilityFactory extends AbstractCapabilityFactory {
 
@@ -18,7 +19,7 @@ public class MonitoringCapabilityFactory extends AbstractCapabilityFactory {
 
 	@Override
 	public ICapability createCapability(CapabilityDescriptor capabilityDescriptor, String resourceId) throws CapabilityException {
-		return new MonitoringCapability(capabilityDescriptor, resourceId);
+		return new MonitoringCapabilityServiceImpl(capabilityDescriptor, resourceId);
 	}
 
 }
