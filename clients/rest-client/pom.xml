@@ -60,7 +60,11 @@
 		<dependency>
 			<groupId>org.opennaas</groupId>
 			<artifactId>org.opennaas.extensions.router.capability.chassis</artifactId>
-		</dependency>			
+		</dependency>
+		<dependency>
+			<groupId>org.opennaas</groupId>
+			<artifactId>org.opennaas.extensions.router.capability.gretunnel</artifactId>
+		</dependency>		
 	</dependencies>
 
 	<build>

@@ -5,6 +5,7 @@ import org.opennaas.core.resources.capability.AbstractCapabilityFactory;
 import org.opennaas.core.resources.capability.CapabilityException;
 import org.opennaas.core.resources.capability.ICapability;
 import org.opennaas.core.resources.descriptor.CapabilityDescriptor;
+import org.opennaas.extensions.router.capability.gretunnel.ws.GRETunnelCapabilityServiceImpl;
 
 public class GRETunnelCapabilityFactory extends AbstractCapabilityFactory {
 
@@ -18,7 +19,7 @@ public class GRETunnelCapabilityFactory extends AbstractCapabilityFactory {
 
 	@Override
 	public ICapability createCapability(CapabilityDescriptor capabilityDescriptor, String resourceId) throws CapabilityException {
-		return new GRETunnelCapability(capabilityDescriptor, resourceId);
+		return new GRETunnelCapabilityServiceImpl(capabilityDescriptor, resourceId);
 	}
 
 }

@@ -1,19 +1,19 @@
 package org.opennaas.client.rest;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
+import org.opennaas.extensions.router.capability.gretunnel.ws.wrapper.CreateGRETunnelRequest;
+import org.opennaas.extensions.router.capability.gretunnel.ws.wrapper.DeleteGRETunnelRequest;
 import org.opennaas.extensions.router.model.EnabledLogicalElement.EnabledState;
 import org.opennaas.extensions.router.model.GRETunnelConfiguration;
 import org.opennaas.extensions.router.model.GRETunnelService;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 
 public class GRETunnelTest {
@@ -35,7 +35,9 @@ public class GRETunnelTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, getGRETunnelService());
+			CreateGRETunnelRequest request = new CreateGRETunnelRequest();
+			request.setGreTunnelService(getGRETunnelService());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -51,7 +53,9 @@ public class GRETunnelTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, getGRETunnelService());
+			DeleteGRETunnelRequest request = new DeleteGRETunnelRequest();
+			request.setGreTunnelService(getGRETunnelService());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -62,16 +66,13 @@ public class GRETunnelTest {
 	 * 
 	 */
 	private static void showGRETunnelConfiguration() {
-		List<GRETunnelService> response = null;
+		ClientResponse response = null;
 		String url = "http://localhost:8888/opennaas/router/lolaM20/gretunnel/showGRETunnelConfiguration";
-		GenericType<List<GRETunnelService>> genericType =
-				new GenericType<List<GRETunnelService>>() {
-				};
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.accept(MediaType.APPLICATION_XML).post(genericType);
-			LOGGER.info("Number of GRETunnels: " + response.size());
+			response = webResource.accept(MediaType.APPLICATION_XML).post(ClientResponse.class);
+			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
 		}
