@@ -4,18 +4,23 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
+import org.opennaas.extensions.router.capability.ospf.ws.wrapper.AddInterfacesInOSPFAreaRequest;
+import org.opennaas.extensions.router.capability.ospf.ws.wrapper.ClearOSPFConfigurationRequest;
+import org.opennaas.extensions.router.capability.ospf.ws.wrapper.ConfifureOSPFRequest;
+import org.opennaas.extensions.router.capability.ospf.ws.wrapper.ConfigureOSPFAreaRequest;
+import org.opennaas.extensions.router.capability.ospf.ws.wrapper.DisableOSPFInterfacesRequest;
+import org.opennaas.extensions.router.capability.ospf.ws.wrapper.EnableOSPFInterfacesRequest;
+import org.opennaas.extensions.router.capability.ospf.ws.wrapper.RemoveInterfacesInOSPFAreaRequest;
+import org.opennaas.extensions.router.capability.ospf.ws.wrapper.RemoveOSPFAreaRequest;
 import org.opennaas.extensions.router.model.LogicalPort;
 import org.opennaas.extensions.router.model.OSPFArea;
 import org.opennaas.extensions.router.model.OSPFAreaConfiguration;
 import org.opennaas.extensions.router.model.OSPFProtocolEndpoint;
 import org.opennaas.extensions.router.model.OSPFService;
-import org.opennaas.extensions.router.model.wrappers.AddInterfacesInOSPFAreaRequest;
-import org.opennaas.extensions.router.model.wrappers.RemoveInterfacesInOSPFAreaRequest;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -37,7 +42,6 @@ public class OSPFTest {
 		enableOSPFInterfaces();
 		disableOSPFInterfaces();
 		getOSPFConfiguration();
-		// showOSPFConfiguration();
 	}
 
 	/**
@@ -81,7 +85,9 @@ public class OSPFTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, new OSPFService());
+			ConfifureOSPFRequest request = new ConfifureOSPFRequest();
+			request.setOspfService(new OSPFService());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -97,7 +103,9 @@ public class OSPFTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, new OSPFService());
+			ClearOSPFConfigurationRequest request = new ClearOSPFConfigurationRequest();
+			request.setOspfService(new OSPFService());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -113,7 +121,9 @@ public class OSPFTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, new OSPFAreaConfiguration());
+			ConfigureOSPFAreaRequest request = new ConfigureOSPFAreaRequest();
+			request.setOspfAreaConfiguration(new OSPFAreaConfiguration());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -129,7 +139,9 @@ public class OSPFTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, new OSPFAreaConfiguration());
+			RemoveOSPFAreaRequest request = new RemoveOSPFAreaRequest();
+			request.setOspfAreaConfiguration(new OSPFAreaConfiguration());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -177,9 +189,9 @@ public class OSPFTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class,
-					new GenericEntity<List<OSPFProtocolEndpoint>>(getProtocols()) {
-					});
+			EnableOSPFInterfacesRequest request = new EnableOSPFInterfacesRequest();
+			request.setListProtocolEndpoints(getProtocols());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -195,9 +207,9 @@ public class OSPFTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class,
-					new GenericEntity<List<OSPFProtocolEndpoint>>(getProtocols()) {
-					});
+			DisableOSPFInterfacesRequest request = new DisableOSPFInterfacesRequest();
+			request.setListProtocolEndpoints(getProtocols());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -213,24 +225,8 @@ public class OSPFTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, new OSPFService());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class);
 			LOGGER.info("Response code: " + response.getStatus());
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage());
-		}
-	}
-
-	/**
-	 * 
-	 */
-	private static void showOSPFConfiguration() {
-		OSPFService response = null;
-		String url = "http://localhost:8888/opennaas/router/lolaM20/ospf/showOSPFConfiguration";
-		try {
-			Client client = Client.create();
-			WebResource webResource = client.resource(url);
-			response = webResource.accept(MediaType.APPLICATION_XML).post(OSPFService.class);
-			LOGGER.info("Response code: " + response.toString());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
 		}

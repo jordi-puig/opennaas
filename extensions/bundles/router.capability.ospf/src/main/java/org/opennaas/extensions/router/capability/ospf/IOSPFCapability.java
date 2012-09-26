@@ -2,12 +2,6 @@ package org.opennaas.extensions.router.capability.ospf;
 
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import org.opennaas.core.resources.capability.CapabilityException;
 import org.opennaas.core.resources.capability.ICapability;
 import org.opennaas.extensions.router.model.LogicalPort;
@@ -15,14 +9,11 @@ import org.opennaas.extensions.router.model.OSPFArea;
 import org.opennaas.extensions.router.model.OSPFAreaConfiguration;
 import org.opennaas.extensions.router.model.OSPFProtocolEndpoint;
 import org.opennaas.extensions.router.model.OSPFService;
-import org.opennaas.extensions.router.model.wrappers.AddInterfacesInOSPFAreaRequest;
-import org.opennaas.extensions.router.model.wrappers.RemoveInterfacesInOSPFAreaRequest;
 
 /**
  * @author Jordi Puig
  * @author Isart Canyameres
  */
-@Path("/")
 public interface IOSPFCapability extends ICapability {
 
 	/**
@@ -30,8 +21,6 @@ public interface IOSPFCapability extends ICapability {
 	 * 
 	 * @throws CapabilityException
 	 */
-	@Path("/activateOSPF")
-	@POST
 	public void activateOSPF() throws CapabilityException;
 
 	/**
@@ -39,8 +28,6 @@ public interface IOSPFCapability extends ICapability {
 	 * 
 	 * @throws CapabilityException
 	 */
-	@Path("/deactivateOSPF")
-	@POST
 	public void deactivateOSPF() throws CapabilityException;
 
 	/**
@@ -51,9 +38,6 @@ public interface IOSPFCapability extends ICapability {
 	 * @param ospfService
 	 * @throws CapabilityException
 	 */
-	@Path("/configureOSPF")
-	@Consumes(MediaType.APPLICATION_XML)
-	@POST
 	public void configureOSPF(OSPFService ospfService) throws CapabilityException;
 
 	/**
@@ -62,9 +46,6 @@ public interface IOSPFCapability extends ICapability {
 	 * @param ospfService
 	 * @throws CapabilityException
 	 */
-	@Path("/clearOSPFconfiguration")
-	@Consumes(MediaType.APPLICATION_XML)
-	@POST
 	public void clearOSPFconfiguration(OSPFService ospfService) throws CapabilityException;
 
 	/**
@@ -73,9 +54,6 @@ public interface IOSPFCapability extends ICapability {
 	 * @param ospfAreaConfiguration
 	 * @throws CapabilityException
 	 */
-	@Path("/configureOSPFArea")
-	@Consumes(MediaType.APPLICATION_XML)
-	@POST
 	public void configureOSPFArea(OSPFAreaConfiguration ospfAreaConfiguration) throws CapabilityException;
 
 	/**
@@ -84,22 +62,7 @@ public interface IOSPFCapability extends ICapability {
 	 * @param ospfAreaConfiguration
 	 * @throws CapabilityException
 	 */
-	@Path("/removeOSPFArea")
-	@Consumes(MediaType.APPLICATION_XML)
-	@POST
 	public void removeOSPFArea(OSPFAreaConfiguration ospfAreaConfiguration) throws CapabilityException;
-
-	/**
-	 * Adds given interfaces to given OSPF area
-	 * 
-	 * @param addInterfacesOSPFRequest
-	 * @throws CapabilityException
-	 */
-	@Path("/addInterfacesInOSPFArea")
-	@POST
-	@Consumes(MediaType.APPLICATION_XML)
-	public void addInterfacesInOSPFArea(AddInterfacesInOSPFAreaRequest addInterfacesInOSPFAreaRequest)
-			throws CapabilityException;
 
 	/**
 	 * Adds given interfaces to given OSPF area
@@ -109,18 +72,6 @@ public interface IOSPFCapability extends ICapability {
 	 * @throws CapabilityException
 	 */
 	public void addInterfacesInOSPFArea(List<LogicalPort> interfaces, OSPFArea ospfArea)
-			throws CapabilityException;
-
-	/**
-	 * Remove given interfaces from given OSPF area
-	 * 
-	 * @param removeInterfacesOSPFRequest
-	 * @throws CapabilityException
-	 */
-	@Path("/removeInterfacesInOSPFArea")
-	@POST
-	@Consumes(MediaType.APPLICATION_XML)
-	public void removeInterfacesInOSPFArea(RemoveInterfacesInOSPFAreaRequest removeInterfacesInOSPFAreaRequest)
 			throws CapabilityException;
 
 	/**
@@ -139,9 +90,6 @@ public interface IOSPFCapability extends ICapability {
 	 * @param interfaces
 	 * @throws CapabilityException
 	 */
-	@Path("/enableOSPFInterfaces")
-	@POST
-	@Consumes(MediaType.APPLICATION_XML)
 	public void enableOSPFInterfaces(List<OSPFProtocolEndpoint> interfaces) throws CapabilityException;
 
 	/**
@@ -150,9 +98,6 @@ public interface IOSPFCapability extends ICapability {
 	 * @param interfaces
 	 * @throws CapabilityException
 	 */
-	@Path("/disableOSPFInterfaces")
-	@POST
-	@Consumes(MediaType.APPLICATION_XML)
 	public void disableOSPFInterfaces(List<OSPFProtocolEndpoint> interfaces) throws CapabilityException;
 
 	/**
@@ -162,8 +107,6 @@ public interface IOSPFCapability extends ICapability {
 	 * 
 	 * @throws CapabilityException
 	 */
-	@Path("/getOSPFConfiguration")
-	@POST
 	public void getOSPFConfiguration() throws CapabilityException;
 
 	/**
@@ -174,7 +117,6 @@ public interface IOSPFCapability extends ICapability {
 	 * @return ospfService
 	 * @throws CapabilityException
 	 */
-	// TODO: export this method using rest too
 	public OSPFService showOSPFConfiguration() throws CapabilityException;
 
 }

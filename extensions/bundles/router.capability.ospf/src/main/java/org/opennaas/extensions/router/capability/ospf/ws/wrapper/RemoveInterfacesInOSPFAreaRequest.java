@@ -1,4 +1,4 @@
-package org.opennaas.extensions.router.model.wrappers;
+package org.opennaas.extensions.router.capability.ospf.ws.wrapper;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import org.opennaas.extensions.router.model.OSPFArea;
  * @author Jordi
  */
 @XmlRootElement
-public class AddInterfacesInOSPFAreaRequest {
+public class RemoveInterfacesInOSPFAreaRequest {
 
 	private List<LogicalPort>	interfaces;
 
