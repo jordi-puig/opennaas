@@ -6,6 +6,8 @@ import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
+import org.opennaas.extensions.roadm.capability.connections.ws.wrapper.MakeConnectionRequest;
+import org.opennaas.extensions.roadm.capability.connections.ws.wrapper.RemoveConnectionRequest;
 import org.opennaas.extensions.router.model.FCPort;
 import org.opennaas.extensions.router.model.opticalSwitch.FiberConnection;
 
@@ -31,7 +33,9 @@ public class ConnectionsTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, getFiberConnection());
+			MakeConnectionRequest request = new MakeConnectionRequest();
+			request.setFiberConnection(getFiberConnection());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
@@ -47,7 +51,9 @@ public class ConnectionsTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, getFiberConnection());
+			RemoveConnectionRequest request = new RemoveConnectionRequest();
+			request.setFiberConnection(getFiberConnection());
+			response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class, request);
 			LOGGER.info("Response code: " + response.getStatus());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
