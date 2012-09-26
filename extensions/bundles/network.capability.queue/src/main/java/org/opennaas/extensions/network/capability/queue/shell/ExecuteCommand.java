@@ -11,7 +11,6 @@ import org.opennaas.core.resources.ResourceException;
 import org.opennaas.core.resources.queue.QueueResponse;
 import org.opennaas.core.resources.shell.GenericKarafCommand;
 import org.opennaas.extensions.network.capability.queue.QueueCapability;
-import org.opennaas.extensions.network.capability.queue.Response;
 
 /**
  * @author Jordi Puig
@@ -28,8 +27,8 @@ public class ExecuteCommand extends GenericKarafCommand {
 		try {
 			IResource network = getResourceFromFriendlyName(networkId);
 			QueueCapability queueCapability = (QueueCapability) getCapability(network.getCapabilities(), QueueCapability.NETQUEUE_CAPABILITY_NAME);
-			Response response = queueCapability.execute();
-			printNetQueueResponse(response.getResponse());
+			Map<String, QueueResponse> response = queueCapability.execute();
+			printNetQueueResponse(response);
 			return null;
 		} catch (ResourceException e) {
 			printError(e);

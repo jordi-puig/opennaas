@@ -3,9 +3,9 @@ package org.opennaas.client.rest;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
-import org.opennaas.extensions.network.capability.queue.Response;
 
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class NetQueueTest {
@@ -24,8 +24,8 @@ public class NetQueueTest {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client.resource(url);
-			Response response = webResource.type(MediaType.APPLICATION_XML).get(Response.class);
-			LOGGER.info("Number of responses: " + response.getResponse().size());
+			ClientResponse response = webResource.type(MediaType.APPLICATION_XML).post(ClientResponse.class);
+			LOGGER.info("Response code: " + response.toString());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
 		}

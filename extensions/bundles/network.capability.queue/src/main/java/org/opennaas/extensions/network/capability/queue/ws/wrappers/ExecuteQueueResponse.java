@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.opennaas.extensions.network.capability.queue;
+package org.opennaas.extensions.network.capability.queue.ws.wrappers;
 
 import java.util.Map;
 
@@ -12,11 +12,10 @@ import org.opennaas.core.resources.queue.QueueResponse;
 
 /**
  * @author Jordi
- * 
  */
 @XmlRootElement
 @XmlType(name = "NetQueueResponse")
-public class Response {
+public class ExecuteQueueResponse {
 
 	private Map<String, QueueResponse>	response;
 

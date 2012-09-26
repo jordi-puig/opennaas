@@ -17,6 +17,7 @@ import org.opennaas.core.resources.capability.CapabilityException;
 import org.opennaas.core.resources.descriptor.CapabilityDescriptor;
 import org.opennaas.core.resources.protocol.ProtocolException;
 import org.opennaas.core.resources.queue.QueueResponse;
+import org.opennaas.extensions.network.capability.queue.ws.IQueueCapabilityService;
 import org.opennaas.extensions.network.model.NetworkModel;
 import org.opennaas.extensions.network.model.domain.NetworkDomain;
 import org.opennaas.extensions.network.model.topology.Device;
@@ -57,7 +58,7 @@ public class QueueCapability extends AbstractCapability implements IQueueCapabil
 	 */
 	@Override
 	public void activate() throws CapabilityException {
-		registerService(Activator.getContext(), CAPABILITY_TYPE, getResourceType(), getResourceName(), IQueueCapability.class.getName());
+		registerService(Activator.getContext(), CAPABILITY_TYPE, getResourceType(), getResourceName(), IQueueCapabilityService.class.getName());
 		super.activate();
 	}
 
@@ -107,9 +108,8 @@ public class QueueCapability extends AbstractCapability implements IQueueCapabil
 	 * @see org.opennaas.extensions.network.capability.queue.IQueueCapability#execute()
 	 */
 	@Override
-	public Response execute() throws CapabilityException {
+	public Map<String, QueueResponse> execute() throws CapabilityException {
 		log.info("Start of execute call");
-		Response response = new Response();
 		Map<String, QueueResponse> queueResponses = new Hashtable<String, QueueResponse>();
 		NetworkModel model = (NetworkModel) resource.getModel();
 		if (model.getNetworkElements() != null && !model.getNetworkElements().isEmpty()) {
@@ -128,8 +128,7 @@ public class QueueCapability extends AbstractCapability implements IQueueCapabil
 			}
 		}
 		log.info("End of execute call");
-		response.setResponse(queueResponses);
-		return response;
+		return queueResponses;
 	}
 
 	/**
